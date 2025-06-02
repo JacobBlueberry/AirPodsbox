@@ -1,0 +1,16 @@
+version: 1
+workflows:
+  primary:
+    name: Primary Workflow
+    environment:
+      android:
+        build_tools_version: "34.0.0"
+        compile_sdk_version: 34
+        target_sdk_version: 34
+        min_sdk_version: 24
+    scripts:
+      - name: Build Debug APK
+        script: |
+          ./gradlew assembleDebug
+    artifacts:
+      - app/build/outputs/apk/debug/*.apk 

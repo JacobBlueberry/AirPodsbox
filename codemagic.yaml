@@ -1,0 +1,21 @@
+workflows:
+  android-workflow:
+    name: Android Build
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      codemagic: default
+    environment:
+      android_signing:
+        debug:
+          keystore_reference: debug_keystore
+    scripts:
+      - name: Build APK
+        script: |
+          ./gradlew assembleDebug
+    artifacts:
+      - app/build/outputs/apk/debug/*.apk
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com 
