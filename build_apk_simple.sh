@@ -4,9 +4,19 @@
 TEMP_DIR=$(mktemp -d)
 cd "$TEMP_DIR"
 
-# 下载构建工具
-curl -L -o build_tools.zip https://github.com/actions/runner/releases/download/v2.311.0/actions-runner-osx-x64-2.311.0.tar.gz
-tar -xzf build_tools.zip
+# 下载 Android SDK
+curl -L -o sdk.zip https://dl.google.com/android/repository/commandlinetools-mac-9477386_latest.zip
+unzip sdk.zip
+
+# 设置环境变量
+export ANDROID_HOME="$TEMP_DIR/android-sdk"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+
+# 接受许可
+yes | sdkmanager --licenses
+
+# 安装必要的组件
+sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
 # 复制项目文件
 cp -r /Users/jacob/Documents/编程/耳机/* .
